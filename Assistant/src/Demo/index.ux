@@ -1,24 +1,78 @@
+<import name="itemDetail" src="../../src/itemDetail/index"></import>
 <template>
   <!-- template里只能有一个根节点 -->
   <div class="demo-page">
-    <text class="title">欢迎打开{{title}}</text>
-    <!-- 点击跳转详情页 -->
-    <input class="btn" type="button" value="跳转到详情页" onclick="routeDetail" />
+    <stack class="wrapper">
+      <input id="searchVal" class="search-btn" type="text" placeholder="点击搜索" value="{{searchValue}}" onchange="changeValue"/>
+      <image class="search-image" src="./img/search.png" onclick="search"></image>
+    </stack>
+    <image if="isShowPlaceholder" class="placeholder" src="./img/Forklift.png"></image>
+    <image class="add" src="./img/add.png" onclick="addNewItem"></image>
+    <itemDetail 
+      if="!isShowPlaceholder" 
+      class="item-detail"
+      result="{{results}}"
+      @close-item-detail-page="closeItemDetailPage">
+    </itemDetail>
   </div>
 </template>
 
 <script>
 import router from '@system.router'
+import fetch from '@system.fetch'
 
 export default {
   // 页面级组件的数据模型，影响传入数据的覆盖机制：private内定义的属性不允许被覆盖
-  private: {
-    title: '示例页面'
+  data: {
+    title: '示例页面',
+    isShowPlaceholder: true,
+    searchValue: '',
+    results: [{
+      "_id": "",
+      "name": "",
+      "address": "",
+      "pic": ""
+    }], // 查询结果
   },
   routeDetail () {
     // 跳转到应用内的某个页面，router用法详见：文档->接口->页面路由
     router.push ({
       uri: '/DemoDetail'
+    })
+  },
+  changeValue (e) {
+    console.log(e)
+    this.searchValue = e.value
+  },
+  closeItemDetailPage () {
+    this.isShowPlaceholder = true
+  },
+  search () {
+    this.isShowPlaceholder = false
+    let searchVal = this.$element("searchVal")
+    searchVal.focus({
+        focus: false
+    })
+    let _this = this
+    fetch.fetch({
+      url: 'http://10.235.232.181:8001/search',
+      data: {
+        "name": this.searchValue
+      },
+      success: (res) => {
+        if (res.code === 200) {
+          _this.results = JSON.parse(res.data)
+          console.log(JSON.parse(res.data))
+        }
+      },
+      fail: err => {
+        console.log(err)
+      }
+    })
+  },
+  addNewItem () {
+    router.push({
+      uri: '/addNewItem'
     })
   }
 }
@@ -27,22 +81,53 @@ export default {
 <style>
   .demo-page {
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    /* justify-content: center; */
+    width: 100%;
+    height: 100%;
   }
-
-  .title {
-    font-size: 40px;
-    text-align: center;
+  .wrapper {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
-
-  .btn {
-    width: 550px;
-    height: 86px;
-    margin-top: 75px;
-    border-radius: 43px;
-    background-color: #09ba07;
-    font-size: 30px;
-    color: #ffffff;
+  .search-btn {
+    margin-top: 20px;
+    padding-left: 30px;
+    width: 90%;
+    height: 66px;
+    font-size: 20px;
+    color: #333;
+    border-width:  1px;
+    border-color: #141414;
+    border-radius: 33px;
+    
+  }
+  .search-image {
+    position: fixed;
+    top: 25px;
+    right: 50px;
+    width: 50px;
+    height: 50px;
+    /* border: 1px solid red; */
+  }
+  .placeholder {
+    position: fixed;
+    top: 500px;
+    left: 220px;
+    width: 100px;
+  }
+  .add {
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+  }
+  .item-detail {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    border: 1px solid red;
   }
 </style>

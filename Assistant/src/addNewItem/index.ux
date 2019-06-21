@@ -1,0 +1,64 @@
+<template>
+    <!-- template里只能有一个根节点 -->
+    <div class="demo-page">
+        <div class="name">
+            <label class="label-name">名 称：</label>
+            <input type="text" class="input input-name">
+        </div>
+        <div class="address">
+            <label class="label-address">地 址：</label>
+            <input type="text" class="input input-address">
+        </div>
+        <div class="pic">
+          <label class="label-pic">图 片：</label>
+          <input type="button" class="input input-pic" value="上传图片">
+        </div>
+        <image src="./img/Forklift.png"></image>
+        <input class="submit" type="button" value="提交">
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    private: {
+      text: ''
+    }
+  }
+  </script>
+  
+  <style>
+    .demo-page {
+      flex-direction: column;
+      align-items: center;
+    }
+    .input {
+        width: 400px;
+        border-radius: 50px;
+        border: 1px solid #141414;
+    }
+    .label-name,
+    .label-address,
+    .label-pic{
+        font-size: 22px;
+    }
+    .name,
+    .address,
+    .pic{
+        margin-top: 40px;
+        flex-direction: row;  
+    }
+    .label-address {
+
+    }
+    .submit {
+        margin-top: 400px;
+        width: 200px;
+        height: 66px;
+        background-color: #fff;
+        color: #141414;
+        font-size: 22px;
+        border-radius: 33px;
+
+    }
+  </style>
+  

@@ -14,7 +14,8 @@
     { "origin": "*" }
   ],
   "config": {
-    "logLevel": "off"
+    "designWidth": "540",
+    "logLevel": "debug"
   },
   "router": {
     "entry": "Demo",
@@ -25,23 +26,18 @@
       "DemoDetail": {
         "component": "index"
       },
-      "About": {
+      "addNewItem": {
+        "component": "index"
+      },
+      "itemDetail": {
         "component": "index"
       }
     },
     "widgets": {
-      "CardDemo": {
-        "name": "CardDemo",
-        "description": "快应用卡片展示",
-        "component": "index",
-        "path": "/CardDemo",
-        "features": []
-      }
     }
   },
   "display": {
-    "titleBarBackgroundColor": "#f2f2f2",
-    "titleBarTextColor": "#414141",
+    "titleBar": false,
     "menu": true,
     "pages": {
       "Demo": {
@@ -51,7 +47,10 @@
       "DemoDetail": {
         "titleBarText": "详情页"
       },
-      "About": {
+      "addNewItem": {
+        "menu": false
+      },
+      "itemDetail": {
         "menu": false
       }
     }

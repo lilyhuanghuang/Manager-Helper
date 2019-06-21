@@ -1,0 +1,70 @@
+<template>
+        <!-- template里只能有一个根节点 -->
+        <div class="demo-page">
+            <list>
+                <list-item type="listItem" class="list" for="(index, item) in result">
+                    <div class="name">
+                        <label class="label-name">名 称：</label>
+                        <input type="text" class="input input-name" value="{{item.name}}">
+                    </div>
+                    <div class="address">
+                        <label class="label-address">地 址：</label>
+                        <input type="text" class="input input-address" value="{{item.address}}">
+                    </div>
+                    <image src="{{item.pic}}"></image>
+                    <input class="submit" type="button" value="返回" onclick="closeItemDetailPage">
+                </list-item>
+            </list>
+        </div>
+      </template>
+      
+      <script>
+      export default {
+        props: ['result'],
+        data: {
+          
+        },
+        closeItemDetailPage () {
+            this.$dispatch('closeItemDetailPage')
+        }
+      }
+      </script>
+      
+      <style>
+        .demo-page {
+          flex-direction: column;
+          align-items: center;
+        }
+        .list {
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center;
+        }
+        .input {
+            width: 400px;
+            border-radius: 50px;
+            border: 1px solid #141414;
+        }
+        .label-name,
+        .label-address,
+        .label-pic{
+            font-size: 22px;
+        }
+        .name,
+        .address,
+        .pic{
+            margin-top: 40px;
+            flex-direction: row;  
+        }
+        .submit {
+            margin-top: 400px;
+            width: 200px;
+            height: 66px;
+            background-color: #fff;
+            color: #141414;
+            font-size: 22px;
+            border-radius: 33px;
+    
+        }
+      </style>
+      
